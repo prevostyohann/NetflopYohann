@@ -15,11 +15,14 @@ import MyRegister from './components/MyRegister';
 import MyLogin from './components/MyLogin';
 import NoMatch from './components/NoMatch';
 import MovieDetails from './components/MovieDetails';
+import SearchTypeBox from './components/SearchTypeBox';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [favourites, setFavourites] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [searchType, setSearchType] = useState('movie');
+  
   const navItems = [
     { path: '/', label: 'Home' },
     { path: '/MovieList', label: 'Movies' },
@@ -52,8 +55,14 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
   const handleLogin = (status) => { setIsLoggedIn(status); };
 
-  const getMovieRequest = async (searchValue) => {
-    const url = {/* votre url omdb ici*/};
+  const handleTypeChange = (type) => {
+    setSearchType(type);
+    console.log('Type de recherche sélectionné:', type);
+    getMovieRequest(searchValue, type); // Trigger search with new type
+  };
+
+  const getMovieRequest = async (searchValue, type) => {
+    const url = `http://www.omdbapi.com/?s=${searchValue}&type=${type}&apikey=58d713de`;
     const response = await fetch(url);
     const responseJson = await response.json();
 
@@ -64,8 +73,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    getMovieRequest(searchValue);
-  }, [searchValue]);
+    getMovieRequest(searchValue, searchType);
+  }, [searchValue, searchType]);
 
   useEffect(() => {
     const movieFavourites = JSON.parse(
@@ -104,9 +113,10 @@ const App = () => {
     return array;
   };
 
+
   return (
     <Router> <div className='container mx-auto p-4 movie-app'> 
-		<NavBar brandName="MyNetflop" navItems={navItems} searchValue={searchValue} setSearchValue={setSearchValue} /> 
+		<NavBar brandName="MyNetflop" navItems={navItems} searchValue={searchValue} setSearchValue={setSearchValue} isLoggedIn={isLoggedIn} setIsLoggedIn = {setIsLoggedIn} /> 
 			<Suspense fallback={<div className="container">Loading...</div>}> 
 			<Routes> 
 				<Route path="/" element={<Home plans={plans} onSelectPlan={handleSelectPlan}/>} /> 
@@ -115,7 +125,11 @@ const App = () => {
 				<Route path="/MovieList" element={ 
 					<> 
 					<MovieListHeading heading='Movies' /> 
+          <div className='flex mt-4'>
+           
 					<SearchBox searchValue={searchValue} setSearchValue={setSearchValue} /> 
+          <SearchTypeBox onTypeChange={handleTypeChange} />
+          </div>
 					<MovieList movies={movies} handleFavouritesClick={addFavouriteMovie} favouriteComponent={AddFavourites} /> 
 					<MovieListHeading heading='Favourites' /> 
 					<MovieList movies={favourites} handleFavouritesClick={removeFavouriteMovie} favouriteComponent={RemoveFavourites} /> </> } /> 

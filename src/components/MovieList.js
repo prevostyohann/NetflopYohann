@@ -50,14 +50,14 @@ const MovieList = (props) => {
   <div class="container mx-auto px-4">
   <div className="overflow-x-auto whitespace-nowrap">
     {props.movies.map((movie, index) => (
-      <div key={movie.imdbID} className="inline-block bg-gray-400 p-4 rounded-lg m-2">
-        <Link to={`/MovieDetails/${movie.imdbID}`}> 
-          <img src={movie.Poster} alt={movie.Title} className="w-64 h-96 object-full" /> 
+      <div key={movie.imdbID} className="inline-block bg-red-500 p-4 rounded-lg m-2">
+        <Link to={`/MovieDetails/${movie.imdbID}`} className="">
+          <img src={movie.Poster} alt={movie.Title} className="w-64 h-96 object-full m-auto" /> 
         </Link>
         <h2 className="text-xl font-bold">{movie.Title}</h2>
 		<div
             onClick={() => props.handleFavouritesClick(movie)}
-            className="overlay flex items-center justify-center"
+            className="overlay flex items-center justify-center cursor-pointer"
           >
             <props.favouriteComponent />
           </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MyForm from './MyForm';
+import ButtonClient from './ButtonClient';
 
 const MyRegister = () => {
   const fields = [
@@ -16,12 +17,18 @@ const MyRegister = () => {
     alert('Inscription réussie !');
   };
 
+  const chemin = '/Login'
+  const NomButton = 'Déjà Client?'
+  
+
   return (
     <div class="bg-gray-900 py-16">
     <div class="container mx-auto px-4"></div>
     <div className="container mx-auto p-4">
       <h1 className="text-2xl text-white font-bold mb-4">S'enregistrer</h1>
       <MyForm fields={fields} onSubmit={handleRegister} />
+      <br></br>
+      <ButtonClient chemin = {chemin} NomButton = {NomButton} />
     </div>
     </div>
   );
