@@ -125,11 +125,13 @@ const App = () => {
 				<Route path="/MovieList" element={ 
 					<> 
 					<MovieListHeading heading='Movies' /> 
-          <div className='flex mt-4'>
-           
+          <div className='flex bg-green-500'>
+            <div className='flex mt-4'>
 					<SearchBox searchValue={searchValue} setSearchValue={setSearchValue} /> 
           <SearchTypeBox onTypeChange={handleTypeChange} />
           </div>
+          </div>
+
 					<MovieList movies={movies} handleFavouritesClick={addFavouriteMovie} favouriteComponent={AddFavourites} /> 
 					<MovieListHeading heading='Favourites' /> 
 					<MovieList movies={favourites} handleFavouritesClick={removeFavouriteMovie} favouriteComponent={RemoveFavourites} /> </> } /> 

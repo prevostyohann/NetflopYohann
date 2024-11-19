@@ -6,12 +6,12 @@ const SearchTypeBox = ({ onTypeChange }) => {
   const handleTypeChange = (event) => {
     const newType = event.target.value;
     setSelectedType(newType);
-    onTypeChange(newType); // Appelle la fonction pour notifier le changement de type
+    onTypeChange(newType);
   };
 
   return (
     <div className="mb-4">
-      <label htmlFor="content-type" className="mr-2">Type de contenu :</label>
+      <label htmlFor="content-type" className="mr-2 font-bold ml-4">Type de contenu :</label>
       <select
         id="content-type"
         value={selectedType}

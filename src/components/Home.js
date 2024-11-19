@@ -1,52 +1,40 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 const Home = ({ plans, onSelectPlan }) => {
     const [selectedPlan, setSelectedPlan] = useState(null); 
-    const handleSelectPlan = (planName) => { setSelectedPlan(planName); };
-      
-  return (
-    <div class="bg-gray-900 py-16">
-    <div class="container mx-auto px-4"> 
-        <h1 class="text-6xl text-gray-200 leading-relaxed text-center">"Bienvenue sur Netflop"</h1>
-        <h2 class="text-4xl text-gray-400 leading-relaxed text-center">
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-    </h2>
-      <div className="flex justify-around">
-        {plans.map((plan, index) => (
-      <div class="bg-white w-64 h-96 content-center  rounded-lg shadow-lg p-8">
-        <div key={index} className="border p-4 rounded shadow-lg">
-                <div class="relative overflow-hidden">
-                    <div class="absolute inset-0 bg-black opacity-40"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <button class="bg-white text-gray-900 py-2 px-6 rounded-full font-bold hover:bg-gray-300">View Product</button>
+    const handleSelectPlan = (planName) => { 
+        setSelectedPlan(planName); 
+        onSelectPlan(planName); // Assurez-vous d'appeler la fonction de rappel
+    };
+
+    return (
+        <div className="p-4 bg-gray-900 text-center">
+            <h1 className="text-5xl font-bold mb-4 text-white">Bienvenue sur Netflop</h1>
+            <p className="mb-6 text-3xl text-green-500">
+                Découvrez NetFlop, votre destination ultime pour rechercher des films et des séries. 
+                Explorez des critiques, des recommandations et trouvez votre prochain coup de cœur !
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {plans.map((plan, index) => (
+                    <div key={index} className="border rounded-lg p-4 shadow-md">
+                        <h2 className="text-white text-xl font-semibold">{plan.name}</h2>
+                        <p className="text-yellow-500 text-lg font-bold">{plan.price}</p>
+                        <ul className="mb-4">
+                            {plan.features.map((feature, i) => (
+                                <li key={i} className="text-sm text-orange-400">{feature}</li>
+                            ))}
+                        </ul>
+                        <button
+                            onClick={() => handleSelectPlan(plan.name)}
+                            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                        >
+                            S'abonner
+                        </button>
                     </div>
-                </div>
-                <h2 className="text-xl font-bold text-center text-orange-500 mt-4">{plan.name}</h2>
-                <p class="text-gray-500 text-center text-sm mt-2">{plan.price}</p>
-                <ul className="mb-4">
-              {plan.features.map((feature, i) => (
-                <li key={i} className="mb-1">{feature}</li>
-              ))}
-            </ul>
-                
+                ))}
             </div>
-        
-          
-            
-            <p className="text-lg mb-2">{plan.price}</p>
-            
-            <button
-              onClick={() => onSelectPlan(plan.name)}
-              className="px-4 py-2 bg-green-500 text-white rounded"
-            >
-              S'abonner
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default Home;
